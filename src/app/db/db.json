@@ -1,0 +1,38 @@
+{
+  "tasks": [
+    {
+      "id": 2,
+      "title": "carlos",
+      "description": "como@",
+      "date": "1990-03-13",
+      "done": false,
+      "estado": "tuEstadoAqui",
+      "state": ""
+    },
+    {
+      "id": 4,
+      "title": "kjhk",
+      "description": "kjlnmbv",
+      "date": "1990-03-12",
+      "done": false,
+      "estado": "tuEstadoAqui",
+      "state": ""
+    }
+  ],
+  "inProgress": [
+    {
+      "id": 4,
+      "title": "Revisar Documentación",
+      "description": "Leer y entender la documentación del nuevo software.",
+      "date": "2024-01-11T05:00:00.000Z"
+    }
+  ],
+  "completed": [
+    {
+      "id": 5,
+      "title": "Revisar Documentación",
+      "description": "Leer y entender la documentación del nuevo software.",
+      "date": "2024-01-11T05:00:00.000Z"
+    }
+  ]
+}

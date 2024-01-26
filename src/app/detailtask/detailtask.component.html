@@ -1,0 +1,93 @@
+
+<div class="layout overflow-hidden">
+  <!-- Navigation -->
+
+
+
+            <!-- Sidebar -->
+            <aside class="sidebar bg-light py-4">
+              <div class="tab-content h-100" role="tablist">
+
+
+                  <!-- Create task -->
+                  <div class="tab-pane fade h-100 show active" id="tab-content-chats" role="tabpanel">
+                      <div class="d-flex flex-column h-100 position-relative">
+                          <div class="hide-scrollbar">
+
+                              <div class="container py-8">
+                                  <!-- Title -->
+
+
+                                  <!-- Search -->
+                                  <div class="mb-8">
+                                    <button mat-raised-button color="primary" (click)="goBack()">Return tasks</button>
+
+
+                                  </div>
+
+
+
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+          </aside>
+          <!-- Sidebar -->
+
+          <!-- Chat -->
+          <main class="main is-visible" data-dropzone-area="">
+            <div class="container h-100">
+              <div class="d-flex flex-column h-100 position-relative">
+                <!-- Chat: Header -->
+                <div class="chat-header border-bottom py-4 py-lg-7">
+                  <div class="row align-items-center">
+                    <!-- Mobile: close -->
+                    <div class="col-2 d-xl-none">
+                      <a class="icon icon-lg text-muted" href="#" data-toggle-chat="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                      </a>
+                    </div>
+                    <!-- Mobile: close -->
+
+                    <!-- Content -->
+                    <div class="col-8 col-xl-12">
+                      <div cdkDropListGroup>
+                        <div class="container">
+                          <form [formGroup]="myForm">
+
+                            <mat-form-field appearance="outline">
+                              <mat-label>Title</mat-label>
+                              <input formControlName="title" matInput placeholder="Task title">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                              <mat-label>Description</mat-label>
+                              <input formControlName="description" matInput placeholder="Task description">
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Fecha</mat-label>
+                              <!-- Reemplazar esto con un input estándar para la fecha -->
+                              <input type="date" formControlName="date" matInput placeholder="Fecha">
+                            </mat-form-field>
+                            <button mat-raised-button color="primary" (click)="updateTask()">Update</button>
+                            <button mat-raised-button color="warn" (click)="deleteTask()">Delete</button>
+                          </form>
+                        </div>
+
+                      </div>
+                    </div>
+                    <!-- Content -->
+                  </div>
+                </div>
+                <!-- Chat: Header -->
+              </div>
+            </div>
+          </main>
+          <!-- Chat -->
+
+
+
+</div>
+
