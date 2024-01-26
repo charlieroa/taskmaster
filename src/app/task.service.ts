@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { Itask } from './interface/task';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTasks(): Observable<Itask[]> {
     return this.http.get<Itask[]>(`${this.apiUrl}/tasks`);
@@ -23,7 +23,7 @@ export class TaskService {
     return this.http.get<Itask[]>(`${this.apiUrl}/completed`);
   }
 
-  getTaskById(id: number): Observable<Itask> {
+  getTaskById(id: number | string): Observable<Itask> {
     return this.http.get<Itask>(`${this.apiUrl}/tasks/${id}`);
   }
 
@@ -35,15 +35,23 @@ export class TaskService {
     return this.http.post<Itask>(`${this.apiUrl}/tasks`, task);
   }
 
-  deleteTask(id: number): Observable<any> {
+  addInProgressTask(task: Itask): Observable<Itask> {
+    return this.http.post<Itask>(`${this.apiUrl}/inProgress`, task);
+  }
+
+  addCompletedTask(task: Itask): Observable<Itask> {
+    return this.http.post<Itask>(`${this.apiUrl}/completed`, task);
+  }
+
+  deleteTask(id: number | string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/tasks/${id}`);
   }
 
-  deleteInProgressTask(id: number): Observable<any> {
+  deleteInProgressTask(id: number | string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/inProgress/${id}`);
   }
 
-  deleteCompletedTask(id: number): Observable<any> {
+  deleteCompletedTask(id: number | string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/completed/${id}`);
   }
 
@@ -51,6 +59,4 @@ export class TaskService {
     // Envía la lista actualizada de tareas al servidor
     return this.http.put<Itask[]>(`${this.apiUrl}/updateTaskOrder`, task);
   }
-
-
 }

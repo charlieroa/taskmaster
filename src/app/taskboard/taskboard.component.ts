@@ -1,4 +1,8 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,15 +12,19 @@ import { TaskService } from '../task.service';
 @Component({
   selector: 'app-taskboard',
   templateUrl: './taskboard.component.html',
-  styleUrls: ['./taskboard.component.scss']
+  styleUrls: ['./taskboard.component.scss'],
 })
 export class TaskboardComponent implements OnInit {
-  todoForm !: FormGroup;
+  todoForm!: FormGroup;
   task: Itask[] = [];
   inprogress: Itask[] = [];
   done: Itask[] = [];
 
-  constructor(private TaskService: TaskService, private fb: FormBuilder, private router: Router) { }
+  constructor(
+    private TaskService: TaskService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadTasks();
@@ -25,16 +33,16 @@ export class TaskboardComponent implements OnInit {
     this.todoForm = this.fb.group({
       item: ['', Validators.required],
       title: ['', Validators.required],
-      date: ['', Validators.required]
+      date: ['', Validators.required],
     });
   }
 
   loadTasks(): void {
     this.TaskService.getTasks().subscribe(
-      tasks => {
+      (tasks) => {
         this.task = tasks;
       },
-      error => {
+      (error) => {
         console.error('Error al cargar tareas', error);
       }
     );
@@ -42,10 +50,10 @@ export class TaskboardComponent implements OnInit {
 
   loadInProgress(): void {
     this.TaskService.getInProgress().subscribe(
-      inProgressTasks => {
+      (inProgressTasks) => {
         this.inprogress = inProgressTasks;
       },
-      error => {
+      (error) => {
         console.error('Error al cargar tareas en progreso', error);
       }
     );
@@ -53,24 +61,23 @@ export class TaskboardComponent implements OnInit {
 
   loadCompleted(): void {
     this.TaskService.getCompleted().subscribe(
-      completedTasks => {
+      (completedTasks) => {
         this.done = completedTasks;
       },
-      error => {
+      (error) => {
         console.error('Error al cargar tareas completadas', error);
       }
     );
   }
   addtask() {
     const newTask: Itask = {
-      id: 0, // El ID se establece en 0 o se omite si json-server lo genera automáticamente
+      id: '0', // El ID se establece en 0 o se omite si json-server lo genera automáticamente
       title: this.todoForm.value.title,
       description: this.todoForm.value.item,
       date: this.todoForm.value.date,
       done: false,
-      estado: 'nuevo' // Asume que 'nuevo' es un valor válido para 'estado'
-      ,
-      state: 'task'
+      estado: 'nuevo', // Asume que 'nuevo' es un valor válido para 'estado'
+      state: 'task',
     };
 
     this.TaskService.addTask(newTask).subscribe(
@@ -78,7 +85,7 @@ export class TaskboardComponent implements OnInit {
         this.task.push(taskWithId); // Asume que el servidor devuelve la tarea con un ID único
         this.todoForm.reset();
       },
-      error => {
+      (error) => {
         console.error('Error al crear la tarea', error);
       }
     );
@@ -94,7 +101,7 @@ export class TaskboardComponent implements OnInit {
       () => {
         this.task.splice(i, 1); // Actualiza el array local después de eliminar la tarea del servidor
       },
-      error => {
+      (error) => {
         console.error('Error al eliminar la tarea', error);
       }
     );
@@ -106,7 +113,7 @@ export class TaskboardComponent implements OnInit {
       () => {
         this.inprogress.splice(i, 1); // Actualiza el array local
       },
-      error => {
+      (error) => {
         console.error('Error al eliminar la tarea en progreso', error);
       }
     );
@@ -118,7 +125,7 @@ export class TaskboardComponent implements OnInit {
       () => {
         this.done.splice(i, 1); // Actualiza el array local
       },
-      error => {
+      (error) => {
         console.error('Error al eliminar la tarea completada', error);
       }
     );
@@ -142,28 +149,81 @@ export class TaskboardComponent implements OnInit {
     // Envía una solicitud HTTP para actualizar la tarea en el servidor
     this.TaskService.updateTask(task).subscribe(
       () => console.log('Tarea actualizada en el servidor'),
-      error => console.error('Error al actualizar tarea en el servidor', error)
+      (error) =>
+        console.error('Error al actualizar tarea en el servidor', error)
     );
   }
 
   drop(event: CdkDragDrop<Itask[]>) {
+    console.log('drop', event);
+
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
       // Mueve la tarea entre las listas
-      const task = event.previousContainer.data[event.previousIndex];
+      const previousTask = event.previousContainer.data[event.previousIndex];
+
+      console.log('previousTask', previousTask);
+
+      let previousId: string | null = !!event.previousContainer
+        ? event.previousContainer.id
+        : null;
+
+      let targetId: string | null = !!event.container
+        ? event.container.id
+        : null;
+
+      console.log('previousId', previousId);
+      console.log('targetId', targetId);
+
+      if (!previousId || !targetId) {
+        return;
+      }
+
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
 
-      // Actualiza el orden de las tareas en el servidor
-      this.TaskService.updateTaskOrder(this.task).subscribe(
-        () => console.log('Orden de tareas actualizado en el servidor'),
-        error => console.error('Error al actualizar el orden de las tareas en el servidor', error)
-      );
+      switch (previousId) {
+        case 'cdk-drop-list-0':
+          this.TaskService.deleteTask(previousTask.id).subscribe();
+          break;
+
+        case 'cdk-drop-list-1':
+          this.TaskService.deleteInProgressTask(previousTask.id).subscribe();
+          break;
+
+        case 'cdk-drop-list-2':
+          this.TaskService.deleteCompletedTask(previousTask.id).subscribe();
+          break;
+
+        default:
+          break;
+      }
+
+      switch (targetId) {
+        case 'cdk-drop-list-0':
+          this.TaskService.addTask(previousTask).subscribe();
+          break;
+
+        case 'cdk-drop-list-1':
+          this.TaskService.addInProgressTask(previousTask).subscribe();
+          break;
+
+        case 'cdk-drop-list-2':
+          this.TaskService.addCompletedTask(previousTask).subscribe();
+          break;
+
+        default:
+          break;
+      }
     }
   }
 }
