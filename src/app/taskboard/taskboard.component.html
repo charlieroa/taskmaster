@@ -44,11 +44,11 @@
             </aside>
           <!-- Sidebar -->
 
-          <!-- Chat -->
+          <!-- task -->
           <main class="main is-visible" data-dropzone-area="">
             <div class="container h-100">
               <div class="d-flex flex-column h-100 position-relative">
-                <!-- Chat: Header -->
+                <!-- task: Header -->
                 <div class="chat-header border-bottom py-4 py-lg-7">
                   <div class="row align-items-center">
                     <!-- Mobile: close -->
@@ -99,13 +99,12 @@
                                 <div cdkDropList [cdkDropListData]="inprogress" class="example-list" (cdkDropListDropped)="drop($event)">
                                   <div *ngFor="let item of inprogress; let i = index" class="card mb-3" cdkDrag>
                                     <div class="card-body">
-                                      <button mat-icon-button [matMenuTriggerFor]="menu" class="card-menu-button">
+                                      <button mat-icon-button  class="card-menu-button">
                                         <mat-icon>more_vert</mat-icon>
                                       </button>
-                                      <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="onEdit(item)">Editar</button>
+                                      <!-- <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="deletetask(i)">Eliminar</button>
-                                      </mat-menu>
+                                      </mat-menu> -->
 
                                       <!-- Título arriba -->
                                       <h3 class="card-title"><strong>{{ item.title }}</strong></h3>
@@ -147,11 +146,11 @@
                     <!-- Content -->
                   </div>
                 </div>
-                <!-- Chat: Header -->
+                <!-- task: Header -->
               </div>
             </div>
           </main>
-          <!-- Chat -->
+          <!-- task -->
 
 
 

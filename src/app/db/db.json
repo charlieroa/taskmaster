@@ -1,16 +1,19 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Revisar Documentación 2",
-      "description": "Leer y entender la documentación del nuevo software.",
-      "date": "2024-01-11T05:00:00.000Z"
+      "id": "3",
+      "title": "Revisar prueba tecnica",
+      "description": "Revisar prueba tecnica detalle",
+      "date": "2024-01-10",
+      "done": false,
+      "estado": "tuEstadoAqui",
+      "state": ""
     },
     {
       "id": "2",
-      "title": "kjhk",
-      "description": "kjlnmbv",
-      "date": "1990-03-12",
+      "title": "Revisar prueba tecnica 2",
+      "description": "Revisar prueba tecnica mas detalles",
+      "date": "2024-03-12",
       "done": false,
       "estado": "tuEstadoAqui",
       "state": ""
@@ -18,28 +21,19 @@
   ],
   "inProgress": [
     {
-      "id": "4",
-      "title": "4534545",
-      "description": "345345345",
-      "date": "2000-02-01",
-      "done": false,
-      "estado": "nuevo",
-      "state": "task"
-    },
-    {
-      "id": "3",
-      "title": "5435",
-      "description": "345435",
-      "date": "2000-01-10",
-      "done": false,
-      "estado": "nuevo",
-      "state": "task"
-    },
-    {
       "id": "1",
       "title": "Revisar Documentación 2",
       "description": "Leer y entender la documentación del nuevo software.",
       "date": "2024-01-11T05:00:00.000Z"
+    },
+    {
+      "id": "4",
+      "title": "Revisar prueba 3",
+      "description": "Revisar prueba técnica mas detalles adicionales",
+      "date": "2024-02-01",
+      "done": false,
+      "estado": "tuEstadoAqui",
+      "state": ""
     }
   ],
   "completed": [
